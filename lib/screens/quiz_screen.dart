@@ -124,6 +124,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: SizedBox(
+                  
                     width: double.infinity, // Cela permet aux boutons de prendre toute la largeur disponible
                     child: ElevatedButton(
                       onPressed: () => checkAnswer(option),

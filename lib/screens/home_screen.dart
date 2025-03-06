@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quiz_app/Widgets/DropdownCard.dart';
 import 'package:quiz_app/Widgets/SliderCard.dart';
+import 'package:quiz_app/providers/SettingsProvider.dart';
+import 'package:quiz_app/screens/SettingsScreen.dart';
 import 'package:quiz_app/screens/quiz_screen.dart';
-
-
 
 class HomeScreen extends StatefulWidget {
   final Function(bool) toggleTheme;
@@ -20,7 +21,15 @@ class _HomeScreenState extends State<HomeScreen> {
   String selectedDifficulty = "medium";
   int selectedNumQuestions = 10;
 
-  final Map<String, String> categories = {
+
+  @override
+void initState() {
+  super.initState();
+  final settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
+  settingsProvider.initialize();
+}
+ @override
+ final Map<String, String> categories = {
     "9": "Culture Générale",
     "18": "Informatique",
     "21": "Sports",
@@ -44,6 +53,15 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         actions: [
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsScreen()),
+              );
+            },
+          ),
           Switch(
             value: widget.isDarkMode,
             onChanged: widget.toggleTheme,
@@ -109,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>QuizScreen(
+                      builder: (context) => QuizScreen(
                         category: selectedCategory,
                         difficulty: selectedDifficulty,
                         numQuestions: selectedNumQuestions,

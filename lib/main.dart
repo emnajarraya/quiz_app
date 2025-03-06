@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz_app/providers/SettingsProvider.dart';
+import 'package:quiz_app/providers/app_localizations.dart';
 import 'package:quiz_app/providers/quiz_provider.dart';
-import 'package:quiz_app/providers/theme_provider.dart';
 import 'package:quiz_app/screens/home_screen.dart';
-import 'package:quiz_app/screens/quiz_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'providers/SettingsProvider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
   final bool isDarkMode = prefs.getBool('isDarkMode') ?? false;
+  
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => QuizProvider()),
+        ChangeNotifierProvider(create: (_) => SettingsProvider()), // Un seul provider
       ],
       child: MyApp(isDarkMode: isDarkMode),
     ),
@@ -47,7 +52,21 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return Consumer<SettingsProvider>(
+      builder: (context, settings, child) {
+        return MaterialApp(
+          // locale: settings.currentLocale, // Utilisation correcte de la locale
+          // localizationsDelegates: [
+          //   AppLocalizations.delegate,
+          //   GlobalMaterialLocalizations.delegate,
+          //   GlobalWidgetsLocalizations.delegate,
+          //   GlobalCupertinoLocalizations.delegate,
+          // ],
+          // supportedLocales: [
+          //   Locale('en', 'US'),
+          //   Locale('fr', 'FR'),
+          //   Locale('ar', 'SA'),
+          // ],
       debugShowCheckedModeBanner: false,
       title: 'Quiz App',
       theme: ThemeData(
@@ -60,10 +79,13 @@ class _MyAppState extends State<MyApp> {
       themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
       initialRoute: '/',
       routes: {
-        '/': (context) => HomeScreen(toggleTheme: toggleTheme, isDarkMode: isDarkMode),
+        '/': (context) =>
+            HomeScreen(toggleTheme: toggleTheme, isDarkMode: isDarkMode),
         //  '/quiz': (context) => QuizScreen(toggleTheme: toggleTheme, isDarkMode: isDarkMode),
         // '/quiz': (context) => QuizScreen(),
         // '/result': (context) => ResultScreen(),
+      },
+  );
       },
     );
   }
