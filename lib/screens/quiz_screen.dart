@@ -3,6 +3,7 @@ import 'package:quiz_app/models/question_model.dart';
 import 'package:quiz_app/providers/app_localizations.dart';
 import 'package:quiz_app/screens/result_screen.dart';
 import 'package:quiz_app/services/api_service.dart';
+import 'dart:async'; // Import pour le Timer
 
 class QuizScreen extends StatefulWidget {
   final String category;
@@ -27,6 +28,8 @@ class _QuizScreenState extends State<QuizScreen> {
   int currentIndex = 0;
   int score = 0;
   bool isLoading = true;
+  late Timer _timer; // Déclare un Timer
+  int _timeLeft = 10; // Temps initial de 10 secondes pour chaque question
 
   @override
   void initState() {
@@ -40,15 +43,40 @@ class _QuizScreenState extends State<QuizScreen> {
     setState(() {
       isLoading = false;
     });
+    _startTimer(); // Démarre le timer dès que les questions sont chargées
   }
 
+  // Démarre le timer de 10 secondes
+  void _startTimer() {
+    _timeLeft = 10;
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_timeLeft > 0) {
+          _timeLeft--;
+        } else {
+          _nextQuestion(); // Passe à la question suivante après 5 secondes
+        }
+      });
+    });
+  }
+
+  // Vérifier la réponse et passer à la question suivante
   void checkAnswer(String answer) {
+    if (_timer.isActive) {
+      _timer.cancel(); // Arrêter le timer dès qu'une réponse est donnée
+    }
     if (questions[currentIndex].correctAnswer == answer) {
       score++;
     }
+    _nextQuestion();
+  }
+
+  // Passer à la question suivante
+  void _nextQuestion() {
     if (currentIndex < questions.length - 1) {
       setState(() {
         currentIndex++;
+        _startTimer(); // Redémarre le timer pour la question suivante
       });
     } else {
       Navigator.pushReplacement(
@@ -81,8 +109,6 @@ class _QuizScreenState extends State<QuizScreen> {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.translate('quiz'),
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-
-        // title: Text("Quiz", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.purpleAccent,
         elevation: 5,
       ),
@@ -109,6 +135,15 @@ class _QuizScreenState extends State<QuizScreen> {
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
+                ),
+              ),
+              // Affichage du timer
+              Text(
+                "Temps restant: $_timeLeft",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               // Affichage de la question avec un fond arrondi
@@ -155,8 +190,6 @@ class _QuizScreenState extends State<QuizScreen> {
               Spacer(),
               // Affichage du score en bas
               Center(
-// Text("${"question".tr()} ${currentIndex + 1} ${"of".tr()} ${questions.length}"),
-
                 child: Row(
                   children: [
                     Text(
