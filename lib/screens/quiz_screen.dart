@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/models/question_model.dart';
+import 'package:quiz_app/providers/app_localizations.dart';
 import 'package:quiz_app/screens/result_screen.dart';
 import 'package:quiz_app/services/api_service.dart';
 
@@ -7,15 +8,15 @@ class QuizScreen extends StatefulWidget {
   final String category;
   final String difficulty;
   final int numQuestions;
-    final Function(bool) toggleTheme;
+  final Function(bool) toggleTheme;
   final bool isDarkMode;
 
-  QuizScreen({
-    required this.category,
-    required this.difficulty,
-    required this.numQuestions,
-     required this.toggleTheme, required this.isDarkMode
-  });
+  QuizScreen(
+      {required this.category,
+      required this.difficulty,
+      required this.numQuestions,
+      required this.toggleTheme,
+      required this.isDarkMode});
 
   @override
   _QuizScreenState createState() => _QuizScreenState();
@@ -78,7 +79,10 @@ class _QuizScreenState extends State<QuizScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Quiz", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        title: Text(AppLocalizations.of(context)!.translate('quiz'),
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+
+        // title: Text("Quiz", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.purpleAccent,
         elevation: 5,
       ),
@@ -99,8 +103,12 @@ class _QuizScreenState extends State<QuizScreen> {
               Container(
                 padding: EdgeInsets.symmetric(vertical: 10),
                 child: Text(
-                  "Question ${currentIndex + 1} sur ${questions.length}",
-                  style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                  "${AppLocalizations.of(context)!.translate('question')} ${currentIndex + 1} ${AppLocalizations.of(context)!.translate('of')} ${questions.length}",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               // Affichage de la question avec un fond arrondi
@@ -124,8 +132,8 @@ class _QuizScreenState extends State<QuizScreen> {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: SizedBox(
-                  
-                    width: double.infinity, // Cela permet aux boutons de prendre toute la largeur disponible
+                    width: double
+                        .infinity, // Cela permet aux boutons de prendre toute la largeur disponible
                     child: ElevatedButton(
                       onPressed: () => checkAnswer(option),
                       style: ElevatedButton.styleFrom(
@@ -134,9 +142,12 @@ class _QuizScreenState extends State<QuizScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        textStyle: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      child: Text(option, textAlign: TextAlign.center), // Texte centré dans le bouton
+                      child: Text(option,
+                          textAlign:
+                              TextAlign.center), // Texte centré dans le bouton
                     ),
                   ),
                 );
@@ -144,9 +155,26 @@ class _QuizScreenState extends State<QuizScreen> {
               Spacer(),
               // Affichage du score en bas
               Center(
-                child: Text(
-                  "Score: $score",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+// Text("${"question".tr()} ${currentIndex + 1} ${"of".tr()} ${questions.length}"),
+
+                child: Row(
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.translate('score'),
+                      style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                    Text(
+                      "$score", // Assurez-vous que la variable score est une chaîne ici
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

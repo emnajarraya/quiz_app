@@ -1,0 +1,35 @@
+{
+    "quizSettings": "إعدادات الاختبار",
+    "chooseCategory": "اختر الفئة",
+    "chooseDifficulty": "اختر الصعوبة",
+    "startQuiz": "ابدأ الاختبار",
+    "settings": "الإعدادات",
+    "preferences": "التفضيلات",
+    "enableSounds": "تمكين الأصوات",
+    "enableNotifications": "تمكين الإشعارات",
+    "category_9": "ثقافة عامة",
+    "category_18": "معلوماتية",
+    "category_21": "رياضة",
+    "category_23": "تاريخ",
+    "difficulty_easy": "سهل",
+    "difficulty_medium": "متوسط",
+    "difficulty_hard": "صعب",
+    "language": "اللغة",
+
+   
+     "quiz": "اختبار",
+    "nbquest":  "عدد الأسئلة",
+    "score": "النتيجة",
+    "question": "السؤال",
+    "of": "من",
+    "results": "النتائج",
+    "yourScore": "النتيجة",
+    "noScoreRecorded": "لا يوجد سجل للنتيجة لهذه الفئة والصعوبة.",
+    "bestScore": "أفضل نتيجة",
+    "saveScore": "حفظ النتيجة",
+    "resetScores": "إعادة تعيين النتائج",
+    
+    "french": "الفرنسية",
+    "english": "الإنجليزية",
+    "arabic": "العربية"
+  }

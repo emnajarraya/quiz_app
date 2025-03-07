@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/providers/app_localizations.dart';
 
 class SliderCard extends StatelessWidget {
   final int selectedNumQuestions;
@@ -20,14 +21,29 @@ class SliderCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Row(
+            //   children: [
+            //     Icon(Icons.format_list_numbered, color: Colors.purpleAccent),
+            //     SizedBox(width: 8),
+            //     Text("Nombre de questions : $selectedNumQuestions",
+            //         style: TextStyle(fontWeight: FontWeight.bold)),
+            //   ],
+            // ),
             Row(
               children: [
                 Icon(Icons.format_list_numbered, color: Colors.purpleAccent),
                 SizedBox(width: 8),
-                Text("Nombre de questions : $selectedNumQuestions",
+                Text(
+                  AppLocalizations.of(context)!.translate(
+                    'nbquest',
+                  ),
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text(" $selectedNumQuestions",
                     style: TextStyle(fontWeight: FontWeight.bold)),
               ],
             ),
+
             Slider(
               value: selectedNumQuestions.toDouble(),
               min: 5,

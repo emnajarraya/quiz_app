@@ -1,0 +1,35 @@
+{
+    "quizSettings": "Paramètres du Quiz",
+    "chooseCategory": "Choisir une catégorie",
+    "chooseDifficulty": "Choisir une difficulté",
+    "startQuiz": "Commencer le Quiz",
+    "settings": "Paramètres",
+    "preferences": "Préférences",
+    "enableSounds": "Activer les sons",
+    "enableNotifications": "Activer les notifications",
+    "category_9": "Culture Générale",
+    "category_18": "Informatique",
+    "category_21": "Sports",
+    "category_23": "Histoire",
+    "difficulty_easy": "Facile",
+    "difficulty_medium": "Moyen",
+    "difficulty_hard": "Difficile",
+    "language": "Langue",
+    "nbquest": "Nombre de questions",
+     "quiz": "Quiz",
+     "score": "Score",
+  "question": "Question",
+  "of": "sur",
+  "results": "Résultats",
+  "yourScore": "Votre score",
+  "noScoreRecorded": "Pas de score enregistré pour cette catégorie et difficulté.",
+  "bestScore": "Meilleur score",
+  "saveScore": "Sauvegarder mon score",
+  "resetScores": "Réinitialiser les scores",
+
+  "french": "Français",
+  "english": "Anglais",
+  "arabic": "arabic"
+
+   
+  }
